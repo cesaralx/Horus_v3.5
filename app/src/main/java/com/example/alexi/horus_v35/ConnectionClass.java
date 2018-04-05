@@ -12,12 +12,19 @@ import java.sql.DriverManager;
  */
 public class ConnectionClass {
 
-    String ip = "192.168.0.19";
-    String port = "49679";
+//    String ip = "192.168.0.19";
+//    String port = "49679";
+//    String classs = "net.sourceforge.jtds.jdbc.Driver";
+//    String db = "horus_v2";
+//    String un = "cesar";
+//    String password = "alexaltair360Q";
+
+    String ip = "den1.mssql6.gear.host";
+    String port = "1433";
     String classs = "net.sourceforge.jtds.jdbc.Driver";
-    String db = "horus_v2";
-    String un = "cesar";
-    String password = "alexaltair360Q";
+    String db = "horusv2";
+    String un = "horusv2";
+    String password = "Aj6TK0XR_d9_";
 
     @SuppressLint("NewApi")
     public Connection CONN() {
