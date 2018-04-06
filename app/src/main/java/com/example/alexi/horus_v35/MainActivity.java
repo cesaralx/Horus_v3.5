@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     ConnectionClass connectionClass;
     EditText edtuserid,edtpass;
-    Button btnlogin;
+    Button btnlogin, bntna;
     ProgressBar pbbar;
 
     @Override
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         edtuserid = (EditText) findViewById(R.id.edtuserid);
         edtpass = (EditText) findViewById(R.id.edtpass);
         btnlogin = (Button) findViewById(R.id.btnlogin);
+        bntna = (Button) findViewById(R.id.bntNaccount);
         pbbar = (ProgressBar) findViewById(R.id.pbbar);
         pbbar.setVisibility(View.GONE);
 
@@ -42,7 +43,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DoLogin doLogin = new DoLogin();
                 doLogin.execute("");
+            }
+        });
 
+        bntna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, NewAccount.class); //aqui cambia de ventana
+                startActivity(i);
             }
         });
 

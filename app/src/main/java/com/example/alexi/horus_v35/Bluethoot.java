@@ -99,6 +99,7 @@ public class Bluethoot extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_bluethoot, container, false);
 
+
         Button openButton = (Button)view.findViewById(R.id.open);
         Button sendButton = (Button)view.findViewById(R.id.send);
         Button closeButton = (Button)view.findViewById(R.id.close);
@@ -309,5 +310,6 @@ public class Bluethoot extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
     }
 }
