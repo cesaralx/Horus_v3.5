@@ -7,6 +7,7 @@
     <string name="prompt_password">Contrasena</string>
     <string name="action_sign_in">Inicia sesion</string>
     <string name="action_na">Crear cuenta</string>
+    <string name="action_olvido">Olvido su contrasena?</string>
     <string name="action_sign_in_short">Inicia sesion</string>
     <string name="error_invalid_email">Este email no es valido</string>
     <string name="error_invalid_password">Esta contrasena es muy corta</string>

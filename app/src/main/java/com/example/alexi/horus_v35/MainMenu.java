@@ -23,7 +23,8 @@ import android.view.MenuItem;
 
 public class MainMenu extends AppCompatActivity
         implements
-        NavigationView.OnNavigationItemSelectedListener, Bluethoot.OnFragmentInteractionListener  {
+        NavigationView.OnNavigationItemSelectedListener, Bluethoot.OnFragmentInteractionListener,
+Myinfo.OnFragmentInteractionListener{
 
 
 
@@ -97,6 +98,8 @@ public class MainMenu extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
+            fragment = new Myinfo();
+            fragmentTransaction = true;
 
         } else if (id == R.id.nav_gallery) {
             fragment = new Bluethoot();

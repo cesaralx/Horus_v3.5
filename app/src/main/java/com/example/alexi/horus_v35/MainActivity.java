@@ -1,7 +1,9 @@
 package com.example.alexi.horus_v35;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +15,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     ConnectionClass connectionClass;
     EditText edtuserid,edtpass;
-    Button btnlogin, bntna;
+    Button btnlogin, bntna, bntolvidar;
     ProgressBar pbbar;
 
     @Override
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         edtpass = (EditText) findViewById(R.id.edtpass);
         btnlogin = (Button) findViewById(R.id.btnlogin);
         bntna = (Button) findViewById(R.id.bntNaccount);
+        bntolvidar = (Button) findViewById(R.id.bntOlvidar);
         pbbar = (ProgressBar) findViewById(R.id.pbbar);
         pbbar.setVisibility(View.GONE);
 
@@ -50,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, NewAccount.class); //aqui cambia de ventana
+                startActivity(i);
+            }
+        });
+
+        bntolvidar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ForgetPassword.class); //aqui cambia de ventana
                 startActivity(i);
             }
         });
@@ -84,6 +101,46 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        private void writeToFile(String data,Context context) {
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("usr.txt", Context.MODE_PRIVATE));
+                outputStreamWriter.write(data);
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+        }
+
+         private String readFromFile(Context context) {
+
+            String ret = "";
+
+            try {
+                InputStream inputStream = context.openFileInput("usr.txt");
+
+                if (inputStream != null) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString;
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((receiveString = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e("login activity", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("login activity", "Can not read file: " + e.toString());
+            }
+
+            return ret;
+        }
+
         @Override
         protected String doInBackground(String... params) {
             if(userid.trim().equals("")|| password.trim().equals(""))
@@ -104,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
                             z = "Inicio correcto";
                             isSuccess=true;
+                            writeToFile(userid,MainActivity.this);
+                            readFromFile(MainActivity.this);
                         }
                         else
                         {
@@ -116,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (Exception ex)
                 {
                     isSuccess = false;
-                    z = "Exceptions";
+                    z = "Exceptions " + ex.getMessage();
                 }
             }
             return z;
