@@ -69,7 +69,6 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
-
         return ret;
     }
 
