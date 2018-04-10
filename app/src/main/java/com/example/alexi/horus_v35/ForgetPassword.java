@@ -81,7 +81,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
             if (con == null) {
                 z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
             } else {
-                String query = "select Password from usuario where EmailDireccion='" + email + "' ";
+                String query = "select Password from cliente where Email='" + email + "' ";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -114,13 +114,13 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
             if (con == null) {
                 z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
             } else {
-                String query = "select UsrName from usuario where EmailDireccion='" + email + "' ";
+                String query = "select Usuario from cliente where Email='" + email + "' ";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
 
                 if(rs.next())
                 {
-                    z = rs.getString("UsrName");
+                    z = rs.getString("Usuario");
                     isSuccess=true;
                 }
                 else

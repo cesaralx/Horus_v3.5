@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     if (con == null) {
                         z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
                     } else {
-                        String query = "select * from usuario where UsrName='" + userid + "' and Password='" + password + "'";
+                        String query = "select * from cliente where Usuario='" + userid + "' and Password='" + password + "'";
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
 

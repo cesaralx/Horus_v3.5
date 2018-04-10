@@ -1,8 +1,10 @@
 package com.example.alexi.horus_v35;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageSwitcher;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -81,6 +84,40 @@ public class Bluethoot extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (!getUserVisibleHint())
+        {
+            return;
+        }
+
+        MainMenu mainActivity = (MainMenu)getActivity();
+        assert mainActivity != null;
+        int id = getResources().getIdentifier("com.example.alexi.horus_v35:drawable/ic_bt", null, null);
+
+        mainActivity.fab.setImageResource(id);
+        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Do what you want
+                Snackbar.make(v, "informacion de vaporizador", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override

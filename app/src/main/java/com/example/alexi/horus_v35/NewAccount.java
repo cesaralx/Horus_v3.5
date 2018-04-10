@@ -91,25 +91,20 @@ public class NewAccount extends AppCompatActivity {
                         if (con == null) {
                             z = "Error en conectar con el servidor\npor favor contacte al soporte tecnico";
                         } else {
-                            PreparedStatement pst = con.prepareStatement("insert into usuario(UsrName\n" +
-                                    "      ,Nombre\n" +
-                                    "      ,EmailDireccion\n" +
-                                    "      ,NumeroContacto\n" +
-                                    "      ,Direccion\n" +
-                                    "      ,Password\n" +
-                                    "      ,Status\n" +
-                                    "      ,UserImage\n" +
-                                    "      ,Fecha) values(?,?,?,?,?,?,?,?,?)");
-                            pst.setString(1, userid);
-                            pst.setString(2, nom);
-                            pst.setString(3, correo);
-                            pst.setString(4, tel);
-                            pst.setString(5, dir);
-                            pst.setString(6, contra);
-                            pst.setString(7, "1");
-                            pst.setBlob(8, (Blob) null);
+                            PreparedStatement pst = con.prepareStatement("insert into cliente(ClienteNombre\n" +
+                                    "      ,ClienteContNo\n" +
+                                    "      ,ClienteDireccion\n" +
+                                    "      ,Fecha\n" +
+                                    "      ,Usuario\n" +
+                                    "      ,Email, Password) values(?,?,?,?,?,?,?)");
+                            pst.setString(1, nom);
+                            pst.setString(2, tel);
+                            pst.setString(3, dir);
                             java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                            pst.setString(9, date.toString());
+                            pst.setString(4, date.toString());
+                            pst.setString(6, correo);
+                            pst.setString(5, userid);
+                            pst.setString(7, contra);
 
                            int rs =  pst.executeUpdate();
 

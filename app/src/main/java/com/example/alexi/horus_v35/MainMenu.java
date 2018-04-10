@@ -1,5 +1,6 @@
 package com.example.alexi.horus_v35;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -67,6 +69,25 @@ Myinfo.OnFragmentInteractionListener{
         } else {
             super.onBackPressed();
         }
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Estas seguro que quieres salir");
+        // alert.setMessage("Message");
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Your action here
+                finish();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+
+        alert.show();
     }
 
     @Override
@@ -111,12 +132,12 @@ Myinfo.OnFragmentInteractionListener{
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
+            Intent i = new Intent(MainMenu.this, MainActivity.class); //aqui cambia de ventana
+            startActivity(i);
+            this.finish();
         } else if (id == R.id.nav_send) {
-
+            this.finish();
         }
 
         //NOTE: Fragment changing code
@@ -138,4 +159,5 @@ Myinfo.OnFragmentInteractionListener{
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }

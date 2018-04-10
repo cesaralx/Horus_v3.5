@@ -21,6 +21,7 @@
     <string name="menu_bt">Conectar con bluethoot</string>
     <string name="menu_productos">Productos</string>
     <string name="menu_salir">Salir</string>
+    <string name="menu_cs">Cerrar sesion</string>
 
     <string name="title_activity_menu">Menu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

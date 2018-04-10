@@ -1,6 +1,7 @@
  package com.example.alexi.horus_v35;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,11 +113,14 @@ public class Myinfo extends Fragment {
          }
 
          MainMenu mainActivity = (MainMenu)getActivity();
+         int id = getResources().getIdentifier("com.example.alexi.horus_v35:drawable/ic_edit", null, null);
+
+         mainActivity.fab.setImageResource(id);
          mainActivity.fab.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  //Do what you want
-                 Snackbar.make(v, "Replace con action", Snackbar.LENGTH_LONG)
+                 Snackbar.make(v, "Editar informacion usuario", Snackbar.LENGTH_LONG)
                          .setAction("Action", null).show();
              }
          });
@@ -167,16 +172,16 @@ public class Myinfo extends Fragment {
                 z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
             } else {
 
-                PreparedStatement statement = con.prepareStatement("select * from usuario where UsrName = ?");
+                PreparedStatement statement = con.prepareStatement("select * from cliente where Usuario = ?");
                 statement.setString(1, user);
                 ResultSet rs = statement.executeQuery();
 
                 if(rs.next())
                 {
-                    Nombre = rs.getString("Nombre");
-                    Telefono = rs.getString("NumeroContacto");
-                    Email = rs.getString("EmailDireccion");
-                    Direccion = rs.getString("Direccion");
+                    Nombre = rs.getString("ClienteNombre");
+                    Telefono = rs.getString("ClienteContNo");
+                    Email = rs.getString("Email");
+                    Direccion = rs.getString("ClienteDireccion");
 
                 }
                 else
@@ -258,6 +263,28 @@ public class Myinfo extends Fragment {
              Log.e("login activity", "Can not read file: " + e.toString());
          }
          return ret;
+     }
+
+
+      void onBackPressed() {
+         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+         alert.setTitle("Do you want to logout?");
+         // alert.setMessage("Message");
+
+         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+             public void onClick(DialogInterface dialog, int whichButton) {
+                 //Your action here
+             }
+         });
+
+         alert.setNegativeButton("Cancel",
+                 new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int whichButton) {
+                     }
+                 });
+
+         alert.show();
+
      }
 
 }
