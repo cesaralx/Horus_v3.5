@@ -32,6 +32,8 @@ Myinfo.OnFragmentInteractionListener{
 
 
     public FloatingActionButton fab;
+    Actions ac = new Actions();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +66,11 @@ Myinfo.OnFragmentInteractionListener{
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Estas seguro que quieres salir");
@@ -133,8 +135,10 @@ Myinfo.OnFragmentInteractionListener{
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_share) {
+            ac.deleteFile(MainMenu.this);
             Intent i = new Intent(MainMenu.this, MainActivity.class); //aqui cambia de ventana
             startActivity(i);
+
             this.finish();
         } else if (id == R.id.nav_send) {
             this.finish();

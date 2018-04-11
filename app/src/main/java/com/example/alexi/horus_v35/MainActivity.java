@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Actions ac = new Actions();
+
 
         connectionClass = new ConnectionClass();
         edtuserid = (EditText) findViewById(R.id.edtuserid);
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         bntolvidar = (Button) findViewById(R.id.bntOlvidar);
         pbbar = (ProgressBar) findViewById(R.id.pbbar);
         pbbar.setVisibility(View.GONE);
+
+        if (ac.readFromFile(MainActivity.this) != null){
+            Intent i = new Intent(MainActivity.this, MainMenu.class); //aqui cambia de ventana
+            startActivity(i);
+            finish();
+        }
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
