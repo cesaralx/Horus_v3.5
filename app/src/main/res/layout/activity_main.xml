@@ -15,7 +15,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideOverlay">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -31,43 +32,41 @@
                 app:srcCompat="@drawable/nicevaping_logo_v1" />
 
 
-
-                <AutoCompleteTextView
-                    android:id="@+id/edtuserid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#5d5d5d"
-                    android:hint="@string/prompt_user"
-                    android:padding="10dp"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    />
+            <AutoCompleteTextView
+                android:id="@+id/edtuserid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#5d5d5d"
+                android:hint="@string/prompt_user"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
 
-                <EditText
-                    android:id="@+id/edtpass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="#5d5d5d"
-                    android:hint="@string/prompt_password"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"/>
+            <EditText
+                android:id="@+id/edtpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#5d5d5d"
+                android:hint="@string/prompt_password"
+                android:imeActionId="6"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
 
             <Button
@@ -76,10 +75,11 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="10dp"
-                android:background="?android:attr/colorPressedHighlight"
+                android:background="@android:color/holo_orange_light"
+                android:elevation="@dimen/sd_fab_mini_size"
                 android:padding="10dp"
                 android:text="@string/action_sign_in"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
@@ -89,12 +89,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"
                 android:padding="8dp"
                 android:text="@string/action_na"
-                android:textColor="#0f61c6"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/bntOlvidar"
@@ -105,7 +105,7 @@
                 android:background="@android:color/transparent"
                 android:padding="8dp"
                 android:text="@string/action_olvido"
-                android:textColor="#084086"
+                android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

@@ -2,11 +2,14 @@
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -122,6 +125,12 @@ public class Myinfo extends Fragment {
                  //Do what you want
                  Snackbar.make(v, "Editar informacion usuario", Snackbar.LENGTH_LONG)
                          .setAction("Action", null).show();
+//                 onBackPressed();
+                 Intent i = new Intent(getActivity(), EditInfoActivity.class); //aqui cambia de ventana
+                 startActivity(i);
+
+
+
              }
          });
      }

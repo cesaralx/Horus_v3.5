@@ -33,7 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NewAccount" />
         <activity android:name=".ForgetPassword" />
-
+        <activity android:name=".EditInfoActivity"></activity>
     </application>
 
 </manifest>
