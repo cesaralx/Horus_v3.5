@@ -20,7 +20,7 @@ public class NewAccount extends AppCompatActivity {
 
     ConnectionClass connectionClass;
     EditText email, password, nombre, usuario, telefono, direccion ;
-    Button bntcreate;
+    Button bntcreate, bntcancel;
     ProgressBar pbar;
 
     @Override
@@ -37,6 +37,7 @@ public class NewAccount extends AppCompatActivity {
         direccion = (EditText) findViewById(R.id.txtAdress);
 
         bntcreate = (Button) findViewById(R.id.bntCreate);
+        bntcancel = findViewById(R.id.bntCancel);
         pbar = (ProgressBar) findViewById(R.id.pbar);
         pbar.setVisibility(View.GONE);
 
@@ -47,6 +48,14 @@ public class NewAccount extends AppCompatActivity {
                 doLogin.execute("");
             }
         });
+
+        bntcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
         public class DoLogin extends AsyncTask<String,String,String>

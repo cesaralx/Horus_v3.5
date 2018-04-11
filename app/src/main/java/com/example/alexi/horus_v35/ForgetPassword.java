@@ -44,33 +44,6 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         buttonSend.setOnClickListener(this);
     }
 
-    private String readFromFile(Context context) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput("usr.txt");
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString;
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ((receiveString = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
 
     private String getpwd(String email, Context context){
         String z;
@@ -105,6 +78,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         return z;
     }
 
+
     private String getusr(String email, Context context){
         String z;
         Boolean isSuccess = false;
@@ -138,6 +112,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         return z;
     }
 
+
     private void sendEmail() {
 
         //Getting content for email
@@ -160,6 +135,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
             Log.e("SendMail", e.getMessage(), e);
         }
     }
+
 
     @Override
     public void onClick(View v) {

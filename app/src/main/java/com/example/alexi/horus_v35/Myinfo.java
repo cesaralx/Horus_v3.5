@@ -42,6 +42,8 @@ import java.sql.Statement;
  */
 public class Myinfo extends Fragment {
 
+     Actions ac = new Actions();
+
     //My variables
     ConnectionClass connectionClass;
      TextView myName;
@@ -123,10 +125,16 @@ public class Myinfo extends Fragment {
              @Override
              public void onClick(View v) {
                  //Do what you want
-                 Snackbar.make(v, "Editar informacion usuario", Snackbar.LENGTH_LONG)
-                         .setAction("Action", null).show();
-//                 onBackPressed();
+                 Toast.makeText(getActivity(), "Editar informacion usuario",
+                         Toast.LENGTH_LONG).show();
+//                 Snackbar.make(v, "Editar informacion usuario", Snackbar.LENGTH_LONG)
+//                         .setAction("Action", null).show();
+
                  Intent i = new Intent(getActivity(), EditInfoActivity.class); //aqui cambia de ventana
+                 i.putExtra("email", Email);
+                 i.putExtra("nombre", Nombre);
+                 i.putExtra("telefono", Telefono);
+                 i.putExtra("direccion", Direccion);
                  startActivity(i);
 
 
@@ -152,7 +160,7 @@ public class Myinfo extends Fragment {
 
         try
         {
-            String su = showInfo(readFromFile(getActivity()));
+            String su = showInfo(ac.readFromFile(getActivity()));
             if (su != null){
                 Toast.makeText(getActivity(), "Error: " + su,
                         Toast.LENGTH_LONG).show();
@@ -246,33 +254,6 @@ public class Myinfo extends Fragment {
     }
 
 
-     private String readFromFile(Context context) {
-
-         String ret = "";
-
-         try {
-             InputStream inputStream = context.openFileInput("usr.txt");
-
-             if (inputStream != null) {
-                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                 String receiveString;
-                 StringBuilder stringBuilder = new StringBuilder();
-
-                 while ((receiveString = bufferedReader.readLine()) != null) {
-                     stringBuilder.append(receiveString);
-                 }
-
-                 inputStream.close();
-                 ret = stringBuilder.toString();
-             }
-         } catch (FileNotFoundException e) {
-             Log.e("login activity", "File not found: " + e.toString());
-         } catch (IOException e) {
-             Log.e("login activity", "Can not read file: " + e.toString());
-         }
-         return ret;
-     }
 
 
       void onBackPressed() {

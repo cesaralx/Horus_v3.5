@@ -82,12 +82,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="?android:attr/colorPressedHighlight"
+                android:background="@drawable/button_acept"
                 android:padding="10dp"
                 android:text="Crear cuenta"
                 android:textColor="#ffffff"
                 android:textSize="17sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Button
+                android:id="@+id/bntCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_cancel"
+                android:text="Cancelar"
+                android:textColor="@color/cardview_light_background" />
 
         </LinearLayout>
     </ScrollView>

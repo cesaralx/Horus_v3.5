@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 public class EditInfoActivity extends AppCompatActivity {
 
     ConnectionClass connectionClass;
+    Actions ac = new Actions();
 
     TextView myName;
     TextView myEmail;
@@ -46,25 +47,24 @@ public class EditInfoActivity extends AppCompatActivity {
         myTel = (EditText)findViewById(R.id.txtTel);
         myDir = (EditText)findViewById(R.id.txtDir);
 
-        userId = readFromFile(EditInfoActivity.this);
+        userId = ac.readFromFile(EditInfoActivity.this);
 
         bntcreate = (Button) findViewById(R.id.bntCreate);
         bntcancel = (Button)findViewById(R.id.bntCancel);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Nombre = extras.getString("nombre");
+            Email = extras.getString("email");
+            Telefono = extras.getString("telefono");
+            Direccion = extras.getString("direccion");
+        }
 
-
-        try
-        {
-            String su = showInfo(userId);
-            if (su != null){
-                Toast.makeText(EditInfoActivity.this, "Error: " + su,
-                        Toast.LENGTH_LONG).show();
-            }else{
+        try {
                 myName.setText(Nombre.toUpperCase());
                 myTel.setText(Telefono.toUpperCase());
                 myEmail.setText(Email.toUpperCase());
                 myDir.setText(Direccion.toUpperCase());
-            }
         }
         catch (Exception ex) {
             Toast.makeText(EditInfoActivity.this, "Se genero un error en la conexion \n" + ex.getMessage(),
@@ -82,9 +82,6 @@ public class EditInfoActivity extends AppCompatActivity {
                    Toast.makeText(EditInfoActivity.this, "Se genero un error en actualizar ",
                            Toast.LENGTH_LONG).show();
                }
-
-//                Toast.makeText(EditInfoActivity.this, updateInfo(userId),
-//                        Toast.LENGTH_LONG).show();
             }
         });
 
@@ -94,37 +91,6 @@ public class EditInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-    }
-
-    private String readFromFile(Context context) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput("usr.txt");
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString;
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ((receiveString = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-        return ret;
     }
 
     private String updateInfo(String user){
@@ -165,37 +131,39 @@ public class EditInfoActivity extends AppCompatActivity {
         return z;
     }
 
-    private String showInfo(String user){
+//    private String showInfo(String user){
+//
+//        String z = null;
+//        try {
+//            Connection con = connectionClass.CONN();
+//            if (con == null) {
+//                z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
+//            } else {
+//
+//                PreparedStatement statement = con.prepareStatement("select * from cliente where Usuario = ?");
+//                statement.setString(1, user);
+//                ResultSet rs = statement.executeQuery();
+//
+//                if(rs.next())
+//                {
+//                    Nombre = rs.getString("ClienteNombre");
+//                    Telefono = rs.getString("ClienteContNo");
+//                    Email = rs.getString("Email");
+//                    Direccion = rs.getString("ClienteDireccion");
+//
+//                }
+//                else
+//                {
+//                    z = "Usuario no valido";
+//                }
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            z = "Exceptions " + ex.getMessage();
+//        }
+//        return z;
+//    }
 
-        String z = null;
-        try {
-            Connection con = connectionClass.CONN();
-            if (con == null) {
-                z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
-            } else {
 
-                PreparedStatement statement = con.prepareStatement("select * from cliente where Usuario = ?");
-                statement.setString(1, user);
-                ResultSet rs = statement.executeQuery();
-
-                if(rs.next())
-                {
-                    Nombre = rs.getString("ClienteNombre");
-                    Telefono = rs.getString("ClienteContNo");
-                    Email = rs.getString("Email");
-                    Direccion = rs.getString("ClienteDireccion");
-
-                }
-                else
-                {
-                    z = "Usuario no valido";
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            z = "Exceptions " + ex.getMessage();
-        }
-        return z;
-    }
 }

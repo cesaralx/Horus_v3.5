@@ -31,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
     EditText edtuserid,edtpass;
     Button btnlogin, bntna, bntolvidar;
     ProgressBar pbbar;
+    Actions ac;
+    String nombre, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Actions ac = new Actions();
+         ac = new Actions();
 
 
         connectionClass = new ConnectionClass();
@@ -102,11 +104,27 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,r,Toast.LENGTH_SHORT).show();
 
             if(isSuccess) {
+                setlabels();
+
+
                 Intent i = new Intent(MainActivity.this, MainMenu.class); //aqui cambia de ventana
+                i.putExtra("email", email);
+                i.putExtra("nombre", nombre);
                 startActivity(i);
                 finish();
             }
 
+        }
+
+        void setlabels(){
+            if (ac.setInfo(MainActivity.this) != null){
+                Toast.makeText(MainActivity.this , "Se genero un error en la conexion ",
+                        Toast.LENGTH_LONG).show();
+            }else {
+
+                email = ac.getEmail();
+                nombre = ac.getNombre();
+            }
         }
 
         private void writeToFile(String data,Context context) {

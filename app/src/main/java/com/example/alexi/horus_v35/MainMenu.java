@@ -22,7 +22,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import static com.example.alexi.horus_v35.R.id.lblEmailNav;
+import static com.example.alexi.horus_v35.R.id.lblUserNav;
 
 
 public class MainMenu extends AppCompatActivity
@@ -38,9 +42,11 @@ Myinfo.OnFragmentInteractionListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Menu");
         setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
          fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +67,19 @@ Myinfo.OnFragmentInteractionListener{
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View innerview =  navigationView.getHeaderView(0);
+
+        TextView user = (TextView) innerview.findViewById(R.id.lblUserNav);
+        TextView email = (TextView) innerview.findViewById(R.id.lblEmailNav);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            email.setText( extras.getString("email"));
+            user.setText( extras.getString("nombre"));
+        }
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -91,6 +109,8 @@ Myinfo.OnFragmentInteractionListener{
 
         alert.show();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -79,6 +79,10 @@ tools:context=".EditInfoActivity">
             android:ems="10"
             android:inputType="textPersonName" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="26dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -89,15 +93,21 @@ tools:context=".EditInfoActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/button_acept"
                 android:backgroundTint="@color/colorbutton"
                 android:text="Guardar" />
+
+            <Space
+                android:layout_width="204dp"
+                android:layout_height="22dp"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/bntCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorprincipal"
+                android:background="@drawable/button_cancel"
                 android:text="Cancel"
                 android:textColor="@color/cardview_light_background" />
         </LinearLayout>
