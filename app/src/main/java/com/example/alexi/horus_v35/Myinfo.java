@@ -118,7 +118,7 @@ public class Myinfo extends Fragment {
          }
 
          MainMenu mainActivity = (MainMenu)getActivity();
-         int id = getResources().getIdentifier("com.example.alexi.horus_v35:drawable/ic_edit", null, null);
+         int id = getResources().getIdentifier("horus.alexi.horus_v35:drawable/ic_edit", null, null);
 
          mainActivity.fab.setImageResource(id);
          mainActivity.fab.setOnClickListener(new View.OnClickListener() {

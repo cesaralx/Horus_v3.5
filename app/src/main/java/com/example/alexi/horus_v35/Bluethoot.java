@@ -22,6 +22,8 @@ import android.widget.ImageSwitcher;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -107,15 +109,23 @@ public class Bluethoot extends Fragment {
 
         MainMenu mainActivity = (MainMenu)getActivity();
         assert mainActivity != null;
-        int id = getResources().getIdentifier("com.example.alexi.horus_v35:drawable/ic_bt", null, null);
+        int id = getResources().getIdentifier("horus.alexi.horus_v35:drawable/ic_bt", null, null);
 
         mainActivity.fab.setImageResource(id);
         mainActivity.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Do what you want
-                Snackbar.make(v, "informacion de vaporizador", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Toast.makeText(getActivity(), "Editar Vaporizador",
+                        Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(getActivity(), ConfigVap.class); //aqui cambia de ventana
+//                i.putExtra("email", Email);
+//                i.putExtra("nombre", Nombre);
+//                i.putExtra("telefono", Telefono);
+//                i.putExtra("direccion", Direccion);
+                startActivity(i);
+
             }
         });
     }

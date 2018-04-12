@@ -33,7 +33,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NewAccount" />
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".EditInfoActivity"></activity>
+        <activity android:name=".EditInfoActivity" />
+        <activity android:name=".ConfigVap"></activity>
     </application>
 
 </manifest>

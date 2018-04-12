@@ -17,6 +17,7 @@
         completions."
     </string>
     <string name="email_nv">soporte@nicevaping.com</string>
+    <string name="menu_home">Inicio</string>
     <string name="menu_info">Mi perfil</string>
     <string name="menu_bt">Conectar con bluethoot</string>
     <string name="menu_productos">Productos</string>

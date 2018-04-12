@@ -32,7 +32,7 @@ import static com.example.alexi.horus_v35.R.id.lblUserNav;
 public class MainMenu extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener, Bluethoot.OnFragmentInteractionListener,
-Myinfo.OnFragmentInteractionListener{
+Myinfo.OnFragmentInteractionListener, Home.OnFragmentInteractionListener{
 
 
     public FloatingActionButton fab;
@@ -77,6 +77,11 @@ Myinfo.OnFragmentInteractionListener{
             email.setText( extras.getString("email"));
             user.setText( extras.getString("nombre"));
         }
+
+        Fragment fragment = new Home();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
     }
 
 
@@ -162,6 +167,10 @@ Myinfo.OnFragmentInteractionListener{
             this.finish();
         } else if (id == R.id.nav_send) {
             this.finish();
+        }
+        else if (id == R.id.nav_main) {
+            fragment = new Home();
+            fragmentTransaction = true;
         }
 
         //NOTE: Fragment changing code
