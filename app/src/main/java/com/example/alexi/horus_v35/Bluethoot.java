@@ -42,7 +42,6 @@ import java.util.UUID;
 public class Bluethoot extends Fragment {
 
     TextView myLabel;
-    EditText myTextbox;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
@@ -148,10 +147,9 @@ public class Bluethoot extends Fragment {
 
 
         Button openButton = (Button)view.findViewById(R.id.open);
-        Button sendButton = (Button)view.findViewById(R.id.send);
+//        Button sendButton = (Button)view.findViewById(R.id.send);
         Button closeButton = (Button)view.findViewById(R.id.close);
         myLabel = (TextView)view.findViewById(R.id.label);
-        myTextbox = (EditText)view.findViewById(R.id.entry);
 
         //kkkkkkkkkkkkk
         //Open Button
@@ -169,17 +167,17 @@ public class Bluethoot extends Fragment {
         });
 
         //Send Button
-        sendButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                try
-                {
-                    sendData();
-                }
-                catch (IOException ex) { }
-            }
-        });
+//        sendButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                try
+//                {
+//                    sendData();
+//                }
+//                catch (IOException ex) { }
+//            }
+//        });
 
         //Close button
         closeButton.setOnClickListener(new View.OnClickListener()
@@ -190,7 +188,7 @@ public class Bluethoot extends Fragment {
                 {
                     closeBT();
                 }
-                catch (IOException ex) { }
+                catch (Exception ex) { }
             }
         });
 
@@ -303,13 +301,13 @@ public class Bluethoot extends Fragment {
         workerThread.start();
     }
 
-    void sendData() throws IOException
-    {
-        String msg = myTextbox.getText().toString();
-        msg += "\n";
-        mmOutputStream.write(msg.getBytes());
-        myLabel.setText("Data Sent");
-    }
+//    void sendData() throws IOException
+//    {
+//        String msg = myTextbox.getText().toString();
+//        msg += "\n";
+//        mmOutputStream.write(msg.getBytes());
+//        myLabel.setText("Data Sent");
+//    }
 
     void closeBT() throws IOException
     {

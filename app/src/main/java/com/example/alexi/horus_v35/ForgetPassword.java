@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
@@ -28,6 +29,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
     private Button buttonSend;
     private EditText editTextEmail;
     ConnectionClass connectionClass;
+    String user=null, pass=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,42 +47,9 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private String getpwd(String email, Context context){
-        String z;
-        Boolean isSuccess = false;
-
-        try {
-            Connection con = connectionClass.CONN();
-            if (con == null) {
-                z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
-            } else {
-                String query = "select Password from cliente where Email='" + email + "' ";
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-
-                if(rs.next())
-                {
-                    z = rs.getString("Password");
-                    isSuccess=true;
-                }
-                else
-                {
-                    z = "Email no valido";
-                    isSuccess = false;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            isSuccess = false;
-            z = "Exceptions " + ex.getMessage();
-        }
-        return z;
-    }
-
 
     private String getusr(String email, Context context){
-        String z;
+        String z = null;
         Boolean isSuccess = false;
 
         try {
@@ -88,13 +57,14 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
             if (con == null) {
                 z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
             } else {
-                String query = "select Usuario from cliente where Email='" + email + "' ";
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                PreparedStatement statement = con.prepareStatement("select Usuario, Password from cliente where Email like ?");
+                statement.setString(1, email);
+                ResultSet rs = statement.executeQuery();
 
                 if(rs.next())
                 {
-                    z = rs.getString("Usuario");
+                    user = rs.getString("Usuario");
+                    pass = rs.getString("Password");
                     isSuccess=true;
                 }
                 else
@@ -117,10 +87,18 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
 
         //Getting content for email
         String email = editTextEmail.getText().toString().trim();
-        String pwd = getpwd(email, ForgetPassword.this);
-        String usr = getusr(email, ForgetPassword.this);
+
         String subject = "Horus development support";
-        String message =   "Hola " + usr + " tu password es " + pwd;
+        String message =   "Hola no pudimos validar tu usuario ";
+
+        String z = getusr(email, ForgetPassword.this);
+        if( z != null){
+            Toast.makeText(ForgetPassword.this, "Error "+z,
+                    Toast.LENGTH_LONG).show();
+        }else{
+             message =   "Hola " + user + " tu password es " + pass;
+        }
+
 
 
         try {

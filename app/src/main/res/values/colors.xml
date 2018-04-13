@@ -6,4 +6,5 @@
     <color name="colorbutton">#ff8800</color>
     <color name="colorprincipal">#282e34</color>
     <color name="colordefaultamarillo">#FFFFBB33</color>
+    <color name="textedit">#5d5d5d</color>
 </resources>
