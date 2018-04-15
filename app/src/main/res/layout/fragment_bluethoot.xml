@@ -30,29 +30,370 @@
 
             <Space
                 android:layout_width="match_parent"
+                android:layout_height="13dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/open"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_acept"
+                    android:text="@string/bn_conectar"
+                    android:textColor="@color/cardview_light_background" />
+
+                <Space
+                    android:layout_width="202dp"
+                    android:layout_height="11dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/close"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:background="@drawable/button_cancel"
+                    android:text="@string/bn_parar"
+                    android:textColor="@color/cardview_light_background" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
                 android:layout_height="18dp" />
 
-            <Button
-                android:id="@+id/open"
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none" >
+                <LinearLayout
+                    android:id="@+id/innerLay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+                    <LinearLayout
+                        android:id="@+id/asthma_action_plan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/im1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:id="@+id/txtTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/rounded_corner" />
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtTemp"
+                                android:layout_centerInParent="true"
+                                android:text="@string/bn_temp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/controlled_medication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent" >
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_edit" />
+
+                            <TextView
+                                android:id="@+id/txtTemp2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/rounded_corner" />
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtTemp2"
+                                android:layout_centerInParent="true"
+                                android:text="@string/bn_resistencia" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/as_needed_medication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" >
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:id="@+id/txtTemp3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/rounded_corner" />
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtTemp3"
+                                android:layout_centerInParent="true"
+                                android:text="@string/bn_res_status" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rescue_medication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent" >
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:id="@+id/txtTemp4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/rounded_corner" />
+
+                            <TextView
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtTemp4"
+                                android:layout_centerInParent="true"
+                                android:text="@string/bn_temp_liq" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/your_symptoms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent" >
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:id="@+id/txtTemp5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/rounded_corner" />
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtTemp5"
+                                android:layout_centerInParent="true"
+                                android:text="@string/bn_temp_vap" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/your_triggers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:layout_width="0.2dp"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/ic_bt" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/wheeze_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:layout_width="0.2dp"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/ic_bt" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/peak_flow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_bt" />
+
+                            <TextView
+                                android:layout_width="0.2dp"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/ic_bt" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0.2dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/hsv"
+                android:background="@drawable/ic_menu_slideshow" />
+
+            <LinearLayout
+                android:id="@+id/banex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/prev"
+                    android:layout_width="174dp"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:gravity="start"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_prev" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:gravity="end"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+
+                        android:src="@drawable/ic_next" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
+
+            <Switch
+                android:id="@+id/sw_ocultar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/button_acept"
-                android:text="Conectar"
+                android:text="@string/bn_ocultar" />
+
+            <Button
+                android:id="@+id/bntGrafica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_action"
+                android:text="@string/bn_graficar"
                 android:textColor="@color/cardview_light_background" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="11dp" />
+                android:layout_height="14dp" />
 
-            <Button
-                android:id="@+id/close"
+            <com.jjoe64.graphview.GraphView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dip"
+                android:id="@+id/graph" />
 
-                android:background="@drawable/button_cancel"
-                android:text="Parar"
-                android:textColor="@color/cardview_light_background" />
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/recydates"
+                android:layout_width="match_parent"
+                android:layout_height="236dp"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </ScrollView>

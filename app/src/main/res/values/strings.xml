@@ -24,6 +24,17 @@
     <string name="menu_salir">Salir</string>
     <string name="menu_cs">Cerrar sesion</string>
 
+    <string name="bn_graficar">Graficar historial</string>
+    <string name="bn_conectar">Conectar</string>
+    <string name="bn_parar">Parar</string>
+    <string name="bn_ocultar">Ocultar historial</string>
+
+    <string name="bn_temp">Temperatura</string>
+    <string name="bn_resistencia">Resistencia</string>
+    <string name="bn_res_status">Estatus Resistencia</string>
+    <string name="bn_temp_liq">Temp liquido</string>
+    <string name="bn_temp_vap">Temperatura Vapor</string>
+
     <string name="title_activity_menu">Menu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

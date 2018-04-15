@@ -1,35 +1,51 @@
 package com.example.alexi.horus_v35;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Display;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageSwitcher;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
-
+import android.widget.LinearLayout.LayoutParams;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +57,7 @@ import java.util.UUID;
  */
 public class Bluethoot extends Fragment {
 
-    TextView myLabel;
+    TextView myLabel, temp, resistencia, resStatus, tempLiquido, tempVap;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
@@ -52,6 +68,28 @@ public class Bluethoot extends Fragment {
     int readBufferPosition;
     int counter;
     volatile boolean stopWorker;
+    GraphView graph;
+    Actions ac;
+    Switch ocultar;
+
+
+
+    LinearLayout asthmaActionPlan, controlledMedication, asNeededMedication,
+            rescueMedication, yourSymtoms, yourTriggers, wheezeRate, peakFlow, btmenu;
+    LayoutParams params;
+    LinearLayout next, prev;
+    int viewWidth;
+    GestureDetector gestureDetector = null;
+    HorizontalScrollView horizontalScrollView;
+    ArrayList<LinearLayout> layouts;
+    int parentLeft, parentRight;
+    int mWidth;
+    int currPosition, prevPosition;
+
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -136,22 +174,92 @@ public class Bluethoot extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
+
+    private final static int INTERVAL = 60000; //20000 para 30 segundos
+    Handler mHandler = new Handler();
+    Runnable mHandlerTask = new Runnable()
+    {
+        @Override
+        public void run() {
+            ac.writeToFileTemperature(temp.getText().toString(), getActivity());
+//            String g = ac.readFromFileTemperature(getActivity());
+//            Toast.makeText(getActivity() , "Se genero "+ g,
+//                    Toast.LENGTH_LONG).show();
+            mHandler.postDelayed(mHandlerTask, INTERVAL);
+        }
+    };
+
+    void startRepeatingTask()
+    {
+        mHandlerTask.run();
+    }
+
+    void stopRepeatingTask()
+    {
+        mHandler.removeCallbacks(mHandlerTask);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_bluethoot, container, false);
 
+        init(view);
+
+        graph = (GraphView) view.findViewById(R.id.graph);
+        graph.setVisibility(View.GONE);
+        ac = new Actions();
 
         Button openButton = (Button)view.findViewById(R.id.open);
-//        Button sendButton = (Button)view.findViewById(R.id.send);
         Button closeButton = (Button)view.findViewById(R.id.close);
+        Button graficaButton = (Button)view.findViewById(R.id.bntGrafica);
         myLabel = (TextView)view.findViewById(R.id.label);
+        temp = (TextView)view.findViewById(R.id.txtTemp);
+        resistencia = (TextView)view.findViewById(R.id.txtTemp2);
+        resStatus = (TextView)view.findViewById(R.id.txtTemp3);
+        tempLiquido = (TextView)view.findViewById(R.id.txtTemp4);
+        tempVap = (TextView)view.findViewById(R.id.txtTemp5);
+        ocultar = (Switch)view.findViewById(R.id.sw_ocultar);
+        ocultar.setVisibility(View.GONE);
 
-        //kkkkkkkkkkkkk
+        // Replace 'android.R.id.list' with the 'id' of your RecyclerView
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recydates);
+        mRecyclerView.setVisibility(View.GONE);
+
+        ItemData itemsData[] = { new ItemData("Indigo","we"),
+                new ItemData("Red","we"),
+                new ItemData("Blue","we"),
+                new ItemData("Green","we"),
+                new ItemData("Amber","we"),
+                new ItemData("Deep Orange","we")};
+
+
+//        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // specify an adapter (see also next example)
+        MyAdapter mAdapter = new MyAdapter(itemsData);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+        ocultar.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                try
+                {
+                    checkOcultar();
+
+                }
+                catch (Exception ex) { }
+            }
+        });
+
+
+        //Listeners
         //Open Button
         openButton.setOnClickListener(new View.OnClickListener()
         {
@@ -161,23 +269,28 @@ public class Bluethoot extends Fragment {
                 {
                     findBT();
                     openBT();
+                    startRepeatingTask();
+                    horizontalScrollView.setVisibility(View.VISIBLE);
+                    btmenu.setVisibility(View.VISIBLE);
+
                 }
                 catch (IOException ex) { }
             }
         });
 
         //Send Button
-//        sendButton.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                try
-//                {
-//                    sendData();
-//                }
-//                catch (IOException ex) { }
-//            }
-//        });
+        graficaButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                try
+                {
+                    generateChart doLogin = new generateChart();
+                    doLogin.execute("");
+                }
+                catch (Exception ex) { }
+            }
+        });
 
         //Close button
         closeButton.setOnClickListener(new View.OnClickListener()
@@ -186,16 +299,143 @@ public class Bluethoot extends Fragment {
             {
                 try
                 {
+                    stopRepeatingTask();
                     closeBT();
                 }
                 catch (Exception ex) { }
             }
         });
 
-        //kkkkkkkkkkkkkk
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        horizontalScrollView.smoothScrollTo(
+                                (int) horizontalScrollView.getScrollX()
+                                        + viewWidth,
+                                (int) horizontalScrollView.getScrollY());
+                    }
+                }, 100L);
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        horizontalScrollView.smoothScrollTo(
+                                (int) horizontalScrollView.getScrollX()
+                                        - viewWidth,
+                                (int) horizontalScrollView.getScrollY());
+                    }
+                }, 100L);
+            }
+        });
+
+        horizontalScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            if (e1.getX() < e2.getX()) {
+                currPosition = getVisibleViews("left");
+            } else {
+                currPosition = getVisibleViews("right");
+            }
+
+            horizontalScrollView.smoothScrollTo(layouts.get(currPosition)
+                    .getLeft(), 0);
+            return true;
+        }
+    }
+
+    public int getVisibleViews(String direction) {
+        Rect hitRect = new Rect();
+        int position = 0;
+        int rightCounter = 0;
+        for (int i = 0; i < layouts.size(); i++) {
+            if (layouts.get(i).getLocalVisibleRect(hitRect)) {
+                if (direction.equals("left")) {
+                    position = i;
+                    break;
+                } else if (direction.equals("right")) {
+                    rightCounter++;
+                    position = i;
+                    if (rightCounter == 2)
+                        break;
+                }
+            }
+        }
+        return position;
+    }
+
+    void init(View view){
+        prev = (LinearLayout) view.findViewById(R.id.prev);
+        next = (LinearLayout) view.findViewById(R.id.next);
+        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.hsv);
+        horizontalScrollView.setVisibility(View.GONE);
+//        gestureDetector = new GestureDetector(new MyGestureDetector());
+        gestureDetector = new GestureDetector(getActivity(), new MyGestureDetector());
+        asthmaActionPlan = (LinearLayout) view.findViewById(R.id.asthma_action_plan);
+        controlledMedication = (LinearLayout) view.findViewById(R.id.controlled_medication);
+        asNeededMedication = (LinearLayout) view.findViewById(R.id.as_needed_medication);
+        rescueMedication = (LinearLayout) view.findViewById(R.id.rescue_medication);
+        yourSymtoms = (LinearLayout) view.findViewById(R.id.your_symptoms);
+        yourTriggers = (LinearLayout) view.findViewById(R.id.your_triggers);
+        wheezeRate = (LinearLayout) view.findViewById(R.id.wheeze_rate);
+        peakFlow = (LinearLayout) view.findViewById(R.id.peak_flow);
+        btmenu = (LinearLayout) view.findViewById(R.id.banex);
+        btmenu.setVisibility(View.GONE);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        mWidth = display.getWidth(); // deprecated
+        viewWidth = mWidth / 3;
+        layouts = new ArrayList<LinearLayout>();
+        params = new LayoutParams(viewWidth, LayoutParams.WRAP_CONTENT);
+
+        asthmaActionPlan.setLayoutParams(params);
+        controlledMedication.setLayoutParams(params);
+        asNeededMedication.setLayoutParams(params);
+        rescueMedication.setLayoutParams(params);
+        yourSymtoms.setLayoutParams(params);
+        yourTriggers.setLayoutParams(params);
+        wheezeRate.setLayoutParams(params);
+        peakFlow.setLayoutParams(params);
+
+        layouts.add(asthmaActionPlan);
+        layouts.add(controlledMedication);
+        layouts.add(asNeededMedication);
+        layouts.add(rescueMedication);
+        layouts.add(yourSymtoms);
+        layouts.add(yourTriggers);
+        layouts.add(wheezeRate);
+        layouts.add(peakFlow);
+    }
+
+    void checkOcultar(){
+        if(ocultar.isChecked()){
+            graph.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+        }else{
+            graph.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     // my functions
@@ -233,13 +473,19 @@ public class Bluethoot extends Fragment {
 
     void openBT() throws IOException
     {
-        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
-        mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
-        mmSocket.connect();
-        mmOutputStream = mmSocket.getOutputStream();
-        mmInputStream = mmSocket.getInputStream();
+        try {
+            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
+            mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
+            mmSocket.connect();
+            mmOutputStream = mmSocket.getOutputStream();
+            mmInputStream = mmSocket.getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         beginListenForData();
+
+
 
         myLabel.setText("Bluetooth Opened");
     }
@@ -279,7 +525,16 @@ public class Bluethoot extends Fragment {
                                     {
                                         public void run()
                                         {
+                                            double value = Double.parseDouble(data);
+                                            double val;
                                             myLabel.setText(data);
+                                            temp.setText(data); //Temperatura
+                                            val = (4*470)-value;
+                                            resistencia.setText(String.valueOf(val)); //Resistencia
+
+                                            resStatus.setText(checkStatus(val)); //Status resistencia
+                                            tempLiquido.setText(data); //Temperatura liquido
+                                            tempVap.setText(data); //Temperatura vapor
                                         }
                                     });
                                 }
@@ -290,7 +545,7 @@ public class Bluethoot extends Fragment {
                             }
                         }
                     }
-                    catch (IOException ex)
+                    catch (Exception ex)
                     {
                         stopWorker = true;
                     }
@@ -299,6 +554,25 @@ public class Bluethoot extends Fragment {
         });
 
         workerThread.start();
+    }
+
+    String checkStatus(Double temp){
+        String res=null;
+
+        if ( temp >= 1840 && temp <= 1860 ) {
+            res ="Bueno";
+        }
+        else if ( temp >= 1820 && temp <= 1840 ){
+            res = "Estandar";
+        }
+        else if ( temp >= 1810 && temp <= 1820 ){
+            res = "Cerca de cambio";
+        }
+        else {
+            res = "Fuera de rango";
+        }
+
+        return res;
     }
 
 //    void sendData() throws IOException
@@ -355,6 +629,154 @@ public class Bluethoot extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class generateChart extends AsyncTask<String,String,String>
+    {
+        String z = "";
+        Boolean isSuccess = false;
+
+
+//        String userid = edtuserid.getText().toString();
+//        String password = edtpass.getText().toString();
+
+
+        @Override
+        protected void onPreExecute() {
+
+            graph.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            ocultar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+//            graph.setVisibility(View.GONE);
+            Toast.makeText(getActivity(),r,Toast.LENGTH_SHORT).show();
+
+            if(isSuccess) {
+//                setlabels();
+                //aqui hacer algo si pasa
+                gen();
+            }
+        }
+
+        void gen(){
+            try {
+
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                        new DataPoint(0, 1),
+                        new DataPoint(1, 2),
+                        new DataPoint(2, 3),
+                        new DataPoint(3, 2),
+                        new DataPoint(4, 6)
+                });
+                graph.addSeries(series);
+                series.setOnDataPointTapListener(new OnDataPointTapListener() {
+                    @Override
+                    public void onTap(Series series, DataPointInterface dataPoint) {
+                        Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        void setlabels(){
+            if (ac.setInfo(getActivity()) != null){
+                Toast.makeText(getActivity() , "Se genero un error en la conexion ",
+                        Toast.LENGTH_LONG).show();
+            }else {
+
+//                email = ac.getEmail();
+//                nombre = ac.getNombre();
+            }
+        }
+
+        private void writeToFile(String data,Context context) {
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("usr.txt", Context.MODE_PRIVATE));
+                outputStreamWriter.write(data);
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+        }
+
+        private String readFromFile(Context context) {
+
+            String ret = "";
+
+            try {
+                InputStream inputStream = context.openFileInput("usr.txt");
+
+                if (inputStream != null) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString;
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((receiveString = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e("login activity", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("login activity", "Can not read file: " + e.toString());
+            }
+
+            return ret;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+//            if(userid.trim().equals("")|| password.trim().equals(""))
+//                z = "Por favor ingrese usuario y contrasena";
+//            else
+//            {
+//                try {
+//                    Connection con = connectionClass.CONN();
+//                    if (con == null) {
+//                        z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
+//                    } else {
+//                        String query = "select * from cliente where Usuario='" + userid + "' and Password='" + password + "'";
+//                        Statement stmt = con.createStatement();
+//                        ResultSet rs = stmt.executeQuery(query);
+//
+//                        if(rs.next())
+//                        {
+//
+//                            z = "Inicio correcto";
+//                            isSuccess=true;
+//                            writeToFile(userid,MainActivity.this);
+//                            readFromFile(MainActivity.this);
+//                        }
+//                        else
+//                        {
+//                            z = "Credenciales no validas";
+//                            isSuccess = false;
+//                        }
+//
+//                    }
+//                }
+//                catch (Exception ex)
+//                {
+//                    isSuccess = false;
+//                    z = "Exceptions " + ex.getMessage();
+//                }
+//            }
+            z = "Grafica generada";
+            isSuccess = true;
+            return z;
+        }
 
     }
 }
