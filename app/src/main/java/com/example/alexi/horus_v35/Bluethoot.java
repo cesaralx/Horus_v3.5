@@ -228,12 +228,8 @@ public class Bluethoot extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recydates);
         mRecyclerView.setVisibility(View.GONE);
 
-        ItemData itemsData[] = { new ItemData("Indigo","we"),
-                new ItemData("Red","we"),
-                new ItemData("Blue","we"),
-                new ItemData("Green","we"),
-                new ItemData("Amber","we"),
-                new ItemData("Deep Orange","we")};
+        ItemData itemsData[] = ac.getHist();
+
 
 
 //        mRecyclerView.setHasFixedSize(true);

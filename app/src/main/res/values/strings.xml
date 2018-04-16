@@ -35,6 +35,10 @@
     <string name="bn_temp_liq">Temp liquido</string>
     <string name="bn_temp_vap">Temperatura Vapor</string>
 
+    <string name="bn_config_new">Nueva Resistencia</string>
+    <string name="bn_config_liquido">Llenado de liquido</string>
+    <string name="bn_config_actions">Menu de acciones</string>
+
     <string name="title_activity_menu">Menu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

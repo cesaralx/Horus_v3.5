@@ -20,6 +20,8 @@ public class Actions {
 
     private String user, email, nombre, telefono, direccion;
 
+    private String date, accion;
+
     public Actions() {
     }
 
@@ -63,7 +65,21 @@ public class Actions {
         this.direccion = direccion;
     }
 
+    public String getDate() {
+        return date;
+    }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
 
     public String readFromFile(Context context) {
 
@@ -140,6 +156,51 @@ public class Actions {
     public void deleteFile(Context context){
         File file = new File(context.getFilesDir(),"usr.txt");
         boolean deleted = file.delete();
+    }
+
+    public Boolean setHist(Context context, String action){
+        Boolean isSuceess= null;
+        readFromFile(context);
+
+        try {
+            Connection con = connectionClass.CONN();
+            if (con == null) {
+                isSuceess = false;
+            } else {
+
+                PreparedStatement statement = con.prepareStatement("insert into hist_cambios(clienteUser\n" +
+                        "      ,action) values(?,?)");
+                statement.setString(1, user);
+                statement.setString(2, action);
+                int rs =  statement.executeUpdate();
+
+                if(rs == 1)
+                {
+                    isSuceess=true;
+                }
+                else
+                {
+                    isSuceess = false;
+                }
+            }
+        }
+        catch (Exception ex)
+        { isSuceess = false; }
+        return isSuceess;
+    }
+
+
+
+    public ItemData[] getHist(){
+
+        ItemData itemsData[] = { new ItemData("Indigo","we"),
+                new ItemData("Red","we"),
+                new ItemData("Blue","we"),
+                new ItemData("Green","we"),
+                new ItemData("Amber","we"),
+                new ItemData("Deep Orange","we")};
+
+        return itemsData;
     }
 
 

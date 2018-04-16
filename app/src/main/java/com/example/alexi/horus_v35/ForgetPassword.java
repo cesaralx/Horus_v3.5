@@ -120,6 +120,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         sendEmail();
         Intent i = new Intent(ForgetPassword.this, MainActivity.class); //aqui cambia de ventana
         startActivity(i);
+        finish();
     }
 
 }
