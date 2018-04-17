@@ -74,6 +74,8 @@ public class Bluethoot extends Fragment {
     Switch ocultar;
     ProgressBar pbarra;
 
+    int numHist;
+
 
 
     LinearLayout asthmaActionPlan, controlledMedication, asNeededMedication,
@@ -277,6 +279,7 @@ public class Bluethoot extends Fragment {
                 try
                 {
                     ItemData itemsData[] = ac.getHist(getActivity());
+                    numHist = ac.getNUMHIST();
 
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     MyAdapter mAdapter = new MyAdapter(itemsData);
@@ -531,8 +534,8 @@ public class Bluethoot extends Fragment {
                                             resistencia.setText(String.valueOf(val)); //Resistencia
 
                                             resStatus.setText(checkStatus(val)); //Status resistencia
-                                            tempLiquido.setText(data); //Temperatura liquido
-                                            tempVap.setText(data); //Temperatura vapor
+                                            tempLiquido.setText(String.valueOf(value*1.5)); //Temperatura liquido
+                                            tempVap.setText(String.valueOf(value/3)); //Temperatura vapor
                                         }
                                     });
                                 }
@@ -661,15 +664,29 @@ public class Bluethoot extends Fragment {
 
         void gen(){
             try {
+                DataPoint[] DataPoints = new DataPoint[numHist];
+                for(int i=0;i<numHist;i++){
+                    if(i==0)
+                        DataPoints[i] = new DataPoint(i, 1);
+                    if(i>=8)
+                        DataPoints[i] = new DataPoint(i, 1);
+                    if(i<=5 && i>0) {
+                        DataPoints[i] = new DataPoint(i, 6);
+                    }else {
+                        DataPoints[i] = new DataPoint(i, 3);
+                    }
+                }
 
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                        new DataPoint(0, 1),
-                        new DataPoint(1, 2),
-                        new DataPoint(2, 3),
-                        new DataPoint(3, 2),
-                        new DataPoint(4, 8),
-                        new DataPoint(6,5)
-                });
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataPoints);
+
+//                        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+//                        new DataPoint(0, 1),
+//                        new DataPoint(1, 2),
+//                        new DataPoint(2, 3),
+//                        new DataPoint(3, 2),
+//                        new DataPoint(4, 8),
+//                        new DataPoint(6,5)
+//                });
                 graph.addSeries(series);
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override

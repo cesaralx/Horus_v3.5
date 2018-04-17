@@ -4,9 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -66,6 +71,14 @@ public class Products extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
 
+        RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(llm);
+
+        RVAdapter adapter = new RVAdapter(persons);
+        rv.setAdapter(adapter);
+
 
         return view;
     }
@@ -108,4 +121,29 @@ public class Products extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    class Person {
+        String name;
+        String age;
+        int photoId;
+
+        Person(String name, String age, int photoId) {
+            this.name = name;
+            this.age = age;
+            this.photoId = photoId;
+        }
+    }
+
+    private List<Person> persons;
+
+    // This method creates an ArrayList that has three Person objects
+// Checkout the project associated with this tutorial on Github if
+// you want to use the same images.
+    private void initializeData(){
+        persons = new ArrayList<>();
+        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.ic_cerrar));
+        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.ic_bt));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.ic_cerrar));
+    }
+
 }

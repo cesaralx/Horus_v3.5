@@ -33,7 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_prev" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/cigarette.png" />
+                                      <entry key="outputName" value="ic_steam" />
                                     </map>
                                   </option>
                                 </PersistentState>

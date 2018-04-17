@@ -33,7 +33,7 @@
                 android:id="@+id/label"
                 android:layout_width="match_parent"
                 android:layout_height="31dp"
-                android:text="Type here:"
+                android:text="Estatus"
                 android:visibility="visible" />
 
             <Space
@@ -103,7 +103,7 @@
                                 android:id="@+id/im1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_bt" />
+                                android:src="@drawable/ic_temp" />
 
                             <TextView
                                 android:id="@+id/txtTemp"
@@ -130,10 +130,11 @@
                         <RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent" >
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_edit" />
+                                android:src="@drawable/ic_res" />
 
                             <TextView
                                 android:id="@+id/txtTemp2"
@@ -161,10 +162,11 @@
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal" >
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_bt" />
+                                android:src="@drawable/ic_status" />
 
                             <TextView
                                 android:id="@+id/txtTemp3"
@@ -191,10 +193,11 @@
                         <RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent" >
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_bt" />
+                                android:src="@drawable/ic_liquid" />
 
                             <TextView
                                 android:id="@+id/txtTemp4"
@@ -221,10 +224,11 @@
                         <RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent" >
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_bt" />
+                                android:src="@drawable/ic_steam" />
 
                             <TextView
                                 android:id="@+id/txtTemp5"

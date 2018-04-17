@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class SimpleWidgetProvider extends AppWidgetProvider {
 
-    Bluethoot bt = new Bluethoot();
+    Actions ac = new Actions();
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -21,13 +21,13 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
             String number = String.format("%03d", (new Random().nextInt(900) + 100));
+            String temp = ac.readFromFileTemperature(context); // retorna el valor de temperatura actual
 
 //            try{
 //                bt.openBT();
 //            }catch(IOException ex){
 //
 //            }
-
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                     R.layout.simple_widget);

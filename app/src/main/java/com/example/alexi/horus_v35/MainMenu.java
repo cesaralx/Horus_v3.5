@@ -32,7 +32,8 @@ import static com.example.alexi.horus_v35.R.id.lblUserNav;
 public class MainMenu extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener, Bluethoot.OnFragmentInteractionListener,
-Myinfo.OnFragmentInteractionListener, Home.OnFragmentInteractionListener{
+        Myinfo.OnFragmentInteractionListener, Home.OnFragmentInteractionListener,
+        Products.OnFragmentInteractionListener{
 
 
     public FloatingActionButton fab;
@@ -158,6 +159,8 @@ Myinfo.OnFragmentInteractionListener, Home.OnFragmentInteractionListener{
             fragmentTransaction = true;
 
         } else if (id == R.id.nav_slideshow) {
+            fragment = new Products();
+            fragmentTransaction = true;
 
         } else if (id == R.id.nav_share) {
             ac.deleteFile(MainMenu.this);

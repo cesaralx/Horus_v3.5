@@ -24,6 +24,8 @@ public class Actions {
 
     private String date, accion;
 
+    private int NUMHIST;
+
     public Actions() {
     }
 
@@ -81,6 +83,14 @@ public class Actions {
 
     public void setAccion(String accion) {
         this.accion = accion;
+    }
+
+    public int getNUMHIST() {
+        return NUMHIST;
+    }
+
+    public void setNUMHIST(int NUMHIST) {
+        this.NUMHIST = NUMHIST;
     }
 
     public String readFromFile(Context context) {
@@ -246,7 +256,6 @@ public class Actions {
             if (con == null) {
                 isSuceess = false;
             } else {
-
                 PreparedStatement statement = con.prepareStatement("select * from hist_cambios where clienteUser = ?",ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 statement.setString(1, user);
@@ -255,6 +264,7 @@ public class Actions {
                 try {
                     rs.last();
                     itemsData = new ItemData[rs.getRow()];
+                    NUMHIST = rs.getRow();
                     rs.beforeFirst();
                 }
                 catch(Exception ex) {
