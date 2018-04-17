@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class Products extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private List<Person> persons;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -63,6 +66,7 @@ public class Products extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initializeData();
     }
 
     @Override
@@ -70,14 +74,13 @@ public class Products extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
-
         RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
-
         RVAdapter adapter = new RVAdapter(persons);
         rv.setAdapter(adapter);
+        rv.setItemAnimator(new DefaultItemAnimator());
 
 
         return view;
@@ -133,8 +136,6 @@ public class Products extends Fragment {
             this.photoId = photoId;
         }
     }
-
-    private List<Person> persons;
 
     // This method creates an ArrayList that has three Person objects
 // Checkout the project associated with this tutorial on Github if

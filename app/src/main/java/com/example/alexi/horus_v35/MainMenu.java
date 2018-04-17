@@ -1,5 +1,6 @@
 package com.example.alexi.horus_v35;
 
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -73,6 +74,7 @@ public class MainMenu extends AppCompatActivity
         TextView user = (TextView) innerview.findViewById(R.id.lblUserNav);
         TextView email = (TextView) innerview.findViewById(R.id.lblEmailNav);
 
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             email.setText( extras.getString("email"));
@@ -134,6 +136,8 @@ public class MainMenu extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(MainMenu.this, ConfigVap.class); //aqui cambia de ventana
+            startActivity(i);
             return true;
         }
 

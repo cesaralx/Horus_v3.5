@@ -24,6 +24,8 @@
     <string name="menu_salir">Salir</string>
     <string name="menu_cs">Cerrar sesion</string>
 
+    <string name="home_web">www.nicevaping.com</string>
+
     <string name="vap">Vaporizador</string>
     <string name="res">Resistencia</string>
     <string name="save">Guardar</string>
