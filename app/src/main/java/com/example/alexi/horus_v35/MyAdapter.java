@@ -35,8 +35,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
 
-        viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
-        viewHolder.imgViewIcon.setText(itemsData[position].getFecha());
+        try {
+            viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
+            viewHolder.imgViewIcon.setText(itemsData[position].getFecha());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -58,6 +62,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        int count = 0;
+        try {
+            count = itemsData.length;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

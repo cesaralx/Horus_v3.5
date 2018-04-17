@@ -94,8 +94,8 @@ tools:context=".EditInfoActivity">
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/button_acept"
-                android:backgroundTint="@color/colorbutton"
-                android:text="Guardar" />
+                android:text="Guardar"
+                android:textColor="@color/cardview_light_background" />
 
             <Space
                 android:layout_width="204dp"
@@ -108,7 +108,7 @@ tools:context=".EditInfoActivity">
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/button_cancel"
-                android:text="Cancel"
+                android:text="Cancelar"
                 android:textColor="@color/cardview_light_background" />
         </LinearLayout>
 

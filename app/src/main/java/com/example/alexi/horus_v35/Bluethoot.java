@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public class Bluethoot extends Fragment {
     GraphView graph;
     Actions ac;
     Switch ocultar;
+    ProgressBar pbarra;
 
 
 
@@ -212,6 +214,8 @@ public class Bluethoot extends Fragment {
         graph.setVisibility(View.GONE);
         ac = new Actions();
 
+        pbarra = (ProgressBar)view.findViewById(R.id.pbar);
+
         Button openButton = (Button)view.findViewById(R.id.open);
         Button closeButton = (Button)view.findViewById(R.id.close);
         Button graficaButton = (Button)view.findViewById(R.id.bntGrafica);
@@ -228,16 +232,7 @@ public class Bluethoot extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recydates);
         mRecyclerView.setVisibility(View.GONE);
 
-        ItemData itemsData[] = ac.getHist();
 
-
-
-//        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // specify an adapter (see also next example)
-        MyAdapter mAdapter = new MyAdapter(itemsData);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
 
@@ -281,6 +276,13 @@ public class Bluethoot extends Fragment {
             {
                 try
                 {
+                    ItemData itemsData[] = ac.getHist(getActivity());
+
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    MyAdapter mAdapter = new MyAdapter(itemsData);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
                     generateChart doLogin = new generateChart();
                     doLogin.execute("");
                 }
@@ -555,13 +557,13 @@ public class Bluethoot extends Fragment {
     String checkStatus(Double temp){
         String res=null;
 
-        if ( temp >= 1840 && temp <= 1860 ) {
-            res ="Bueno";
+        if ( temp >= 1840 && temp <= 1960 ) {
+            res ="Nuevo";
         }
-        else if ( temp >= 1820 && temp <= 1840 ){
-            res = "Estandar";
+        else if ( temp >= 1810 && temp <= 1840 ){
+            res = "Bueno";
         }
-        else if ( temp >= 1810 && temp <= 1820 ){
+        else if ( temp >= 1800 && temp <= 1810 ){
             res = "Cerca de cambio";
         }
         else {
@@ -651,9 +653,9 @@ public class Bluethoot extends Fragment {
             Toast.makeText(getActivity(),r,Toast.LENGTH_SHORT).show();
 
             if(isSuccess) {
-//                setlabels();
+              //setlabels();
                 //aqui hacer algo si pasa
-                gen();
+               gen();
             }
         }
 
@@ -665,13 +667,14 @@ public class Bluethoot extends Fragment {
                         new DataPoint(1, 2),
                         new DataPoint(2, 3),
                         new DataPoint(3, 2),
-                        new DataPoint(4, 6)
+                        new DataPoint(4, 8),
+                        new DataPoint(6,5)
                 });
                 graph.addSeries(series);
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
-                        Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Info. en punto seleccionado: "+dataPoint, Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (Exception e) {
@@ -692,45 +695,6 @@ public class Bluethoot extends Fragment {
             }
         }
 
-        private void writeToFile(String data,Context context) {
-            try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("usr.txt", Context.MODE_PRIVATE));
-                outputStreamWriter.write(data);
-                outputStreamWriter.close();
-            }
-            catch (IOException e) {
-                Log.e("Exception", "File write failed: " + e.toString());
-            }
-        }
-
-        private String readFromFile(Context context) {
-
-            String ret = "";
-
-            try {
-                InputStream inputStream = context.openFileInput("usr.txt");
-
-                if (inputStream != null) {
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    String receiveString;
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    while ((receiveString = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(receiveString);
-                    }
-
-                    inputStream.close();
-                    ret = stringBuilder.toString();
-                }
-            } catch (FileNotFoundException e) {
-                Log.e("login activity", "File not found: " + e.toString());
-            } catch (IOException e) {
-                Log.e("login activity", "Can not read file: " + e.toString());
-            }
-
-            return ret;
-        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -769,6 +733,7 @@ public class Bluethoot extends Fragment {
 //                    z = "Exceptions " + ex.getMessage();
 //                }
 //            }
+//            gen();
             z = "Grafica generada";
             isSuccess = true;
             return z;

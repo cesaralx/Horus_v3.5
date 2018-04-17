@@ -24,6 +24,10 @@
     <string name="menu_salir">Salir</string>
     <string name="menu_cs">Cerrar sesion</string>
 
+    <string name="vap">Vaporizador</string>
+    <string name="res">Resistencia</string>
+    <string name="save">Guardar</string>
+
     <string name="bn_graficar">Graficar historial</string>
     <string name="bn_conectar">Conectar</string>
     <string name="bn_parar">Parar</string>
@@ -81,6 +85,7 @@
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
+
     <string-array name="pref_sync_frequency_titles">
         <item>15 minutes</item>
         <item>30 minutes</item>
@@ -89,6 +94,21 @@
         <item>6 hours</item>
         <item>Never</item>
     </string-array>
+
+    <string-array name="VapsItems">
+        <item>Smock v22</item>
+        <item>Joytec AIO</item>
+        <item>Smock x8</item>
+        <item>Vaporesso s2</item>
+    </string-array>
+
+    <string-array name="ResItems">
+        <item>8 oms, 30 watts</item>
+        <item>5 oms, 25 watts</item>
+        <item>6 oms, 35 watts</item>
+        <item>8 oms, 25 watts</item>
+    </string-array>
+
     <string-array name="pref_sync_frequency_values">
         <item>15</item>
         <item>30</item>

@@ -13,6 +13,8 @@ import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Actions {
 
@@ -111,6 +113,48 @@ public class Actions {
         return ret;
     }
 
+
+    public void writeToFileAny(String data,Context context, String filename) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    public String readFromFileAny(Context context, String filename) {
+
+        String ret = null;
+
+        try {
+            InputStream inputStream = context.openFileInput(filename);
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
+
     public void writeToFileTemperature(String data,Context context) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("temp.txt", Context.MODE_PRIVATE));
@@ -191,14 +235,49 @@ public class Actions {
 
 
 
-    public ItemData[] getHist(){
+    public ItemData[] getHist(Context context){
 
-        ItemData itemsData[] = { new ItemData("Indigo","we"),
-                new ItemData("Red","we"),
-                new ItemData("Blue","we"),
-                new ItemData("Green","we"),
-                new ItemData("Amber","we"),
-                new ItemData("Deep Orange","we")};
+        readFromFile(context);
+        ItemData[] itemsData = null;
+        Boolean isSuceess= null;
+
+        try {
+            Connection con = connectionClass.CONN();
+            if (con == null) {
+                isSuceess = false;
+            } else {
+
+                PreparedStatement statement = con.prepareStatement("select * from hist_cambios where clienteUser = ?",ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                statement.setString(1, user);
+                ResultSet rs = statement.executeQuery();
+
+                try {
+                    rs.last();
+                    itemsData = new ItemData[rs.getRow()];
+                    rs.beforeFirst();
+                }
+                catch(Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                while(rs.next())
+                {
+//                    Log.e("Exception", "Numero de Row: " + rs.getRow());
+                    itemsData[rs.getRow()] = new ItemData(rs.getString("action"),rs.getString("fecha"));
+                    isSuceess=true;
+                }
+            }
+        }
+        catch (Exception ex)
+        { isSuceess = false; }
+
+//         itemsData[] = { new ItemData("Indigo","we"),
+//                new ItemData("Red","we"),
+//                new ItemData("Blue","we"),
+//                new ItemData("Green","we"),
+//                new ItemData("Amber","we"),
+//                new ItemData("Deep Orange","we")};
 
         return itemsData;
     }
