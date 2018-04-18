@@ -109,7 +109,7 @@ public class MainMenu extends AppCompatActivity
             }
         });
 
-        alert.setNegativeButton("Cancel",
+        alert.setNegativeButton("Cancelar",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                     }

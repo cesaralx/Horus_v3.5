@@ -446,7 +446,7 @@ public class Bluethoot extends Fragment {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBluetoothAdapter == null)
         {
-            myLabel.setText("No bluetooth adapter available");
+            myLabel.setText("Bluetooth no disponible");
             // Show proper message here
 //            finish();
         }
@@ -469,7 +469,7 @@ public class Bluethoot extends Fragment {
                 }
             }
         }
-        myLabel.setText("Bluetooth Device Found");
+        myLabel.setText("Bluetooth encontrado");
     }
 
     void openBT() throws IOException
@@ -488,7 +488,7 @@ public class Bluethoot extends Fragment {
 
 
 
-        myLabel.setText("Bluetooth Opened");
+        myLabel.setText("Conexión bluetooth establecida");
     }
 
     void beginListenForData()
@@ -535,7 +535,9 @@ public class Bluethoot extends Fragment {
 
                                             resStatus.setText(checkStatus(val)); //Status resistencia
                                             tempLiquido.setText(String.valueOf(value*1.5)); //Temperatura liquido
-                                            tempVap.setText(String.valueOf(value/3)); //Temperatura vapor
+                                            double valuei = value/3;
+                                            String result = String.format("%.2f", valuei);
+                                            tempVap.setText(result); //Temperatura vapor
                                         }
                                     });
                                 }
@@ -576,13 +578,6 @@ public class Bluethoot extends Fragment {
         return res;
     }
 
-//    void sendData() throws IOException
-//    {
-//        String msg = myTextbox.getText().toString();
-//        msg += "\n";
-//        mmOutputStream.write(msg.getBytes());
-//        myLabel.setText("Data Sent");
-//    }
 
     void closeBT() throws IOException
     {
@@ -590,7 +585,7 @@ public class Bluethoot extends Fragment {
         mmOutputStream.close();
         mmInputStream.close();
         mmSocket.close();
-        myLabel.setText("Bluetooth Closed");
+        myLabel.setText("Bluetooth cerrado");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -638,10 +633,6 @@ public class Bluethoot extends Fragment {
         Boolean isSuccess = false;
 
 
-//        String userid = edtuserid.getText().toString();
-//        String password = edtpass.getText().toString();
-
-
         @Override
         protected void onPreExecute() {
 
@@ -669,7 +660,7 @@ public class Bluethoot extends Fragment {
                     if(i==0)
                         DataPoints[i] = new DataPoint(i, 1);
                     if(i>=8)
-                        DataPoints[i] = new DataPoint(i, 1);
+                        DataPoints[i] = new DataPoint(i, 8);
                     if(i<=5 && i>0) {
                         DataPoints[i] = new DataPoint(i, 6);
                     }else {
@@ -707,50 +698,13 @@ public class Bluethoot extends Fragment {
                         Toast.LENGTH_LONG).show();
             }else {
 
-//                email = ac.getEmail();
-//                nombre = ac.getNombre();
             }
         }
 
 
         @Override
         protected String doInBackground(String... params) {
-//            if(userid.trim().equals("")|| password.trim().equals(""))
-//                z = "Por favor ingrese usuario y contrasena";
-//            else
-//            {
-//                try {
-//                    Connection con = connectionClass.CONN();
-//                    if (con == null) {
-//                        z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
-//                    } else {
-//                        String query = "select * from cliente where Usuario='" + userid + "' and Password='" + password + "'";
-//                        Statement stmt = con.createStatement();
-//                        ResultSet rs = stmt.executeQuery(query);
-//
-//                        if(rs.next())
-//                        {
-//
-//                            z = "Inicio correcto";
-//                            isSuccess=true;
-//                            writeToFile(userid,MainActivity.this);
-//                            readFromFile(MainActivity.this);
-//                        }
-//                        else
-//                        {
-//                            z = "Credenciales no validas";
-//                            isSuccess = false;
-//                        }
-//
-//                    }
-//                }
-//                catch (Exception ex)
-//                {
-//                    isSuccess = false;
-//                    z = "Exceptions " + ex.getMessage();
-//                }
-//            }
-//            gen();
+
             z = "Grafica generada";
             isSuccess = true;
             return z;

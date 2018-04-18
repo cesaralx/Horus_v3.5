@@ -142,9 +142,16 @@ public class Products extends Fragment {
 // you want to use the same images.
     private void initializeData(){
         persons = new ArrayList<>();
-        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.ic_cerrar));
-        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.ic_bt));
-        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.ic_cerrar));
+        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.smok_al85_kit_85w_2ml_3ml));
+        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.smok_g_priv_kit_220w));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.smok_stick_aio_kit_2ml_1600_mah));
+
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.smok_stick_v8_kit_3000_mah_tfv8_big_baby_5_ml));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.uwell_crown_3_iii_sub_ohm_tank_5ml));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.joyetech_aio_kit_2ml_1500_mah));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.evic_vtc_mini_60w_kit_by_joyetech));
+        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.ijust_2_by_eleaf_55_ml_30_80w));
+
     }
 
 }

@@ -5,13 +5,13 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_user">Usuario</string>
     <string name="prompt_password">Contrasena</string>
-    <string name="action_sign_in">Inicia sesion</string>
+    <string name="action_sign_in">Inicia sesión</string>
     <string name="action_na">Crear cuenta</string>
-    <string name="action_olvido">Olvido su contrasena?</string>
-    <string name="action_sign_in_short">Inicia sesion</string>
+    <string name="action_olvido">Olvido su Contraseña?</string>
+    <string name="action_sign_in_short">Inicia sesión</string>
     <string name="error_invalid_email">Este email no es valido</string>
-    <string name="error_invalid_password">Esta contrasena es muy corta</string>
-    <string name="error_incorrect_password">Esta contrasena es incorrecta</string>
+    <string name="error_invalid_password">Esta Contraseña es muy corta</string>
+    <string name="error_incorrect_password">Esta Contraseña es incorrecta</string>
     <string name="error_field_required">Campo requerido</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
@@ -22,7 +22,7 @@
     <string name="menu_bt">Conectar con bluethoot</string>
     <string name="menu_productos">Productos</string>
     <string name="menu_salir">Salir</string>
-    <string name="menu_cs">Cerrar sesion</string>
+    <string name="menu_cs">Cerrar sesión</string>
 
     <string name="home_web">www.nicevaping.com</string>
 
@@ -43,20 +43,20 @@
 
     <string name="bn_config_new">Nueva Resistencia</string>
     <string name="bn_config_liquido">Llenado de liquido</string>
-    <string name="bn_config_actions">Menu de acciones</string>
+    <string name="bn_config_actions">Menú de acciones</string>
 
-    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_menu">Menú </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Configuracion</string>
-    <string name="title_activity_main_menu">Menu principal</string>
+    <string name="action_settings">Configuración</string>
+    <string name="title_activity_main_menu">Menú principal</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">Configuracion</string>
+    <string name="title_activity_settings">Configuración</string>
 
     <!-- Strings related to Settings -->
 
