@@ -104,11 +104,13 @@ public class EditInfoActivity extends AppCompatActivity {
                 PreparedStatement statement = con.prepareStatement("update cliente set ClienteNombre = ?," +
                         "ClienteContNo = ?," +
                         "Email = ?," +
-                        "ClienteDireccion = ?");
+                        "ClienteDireccion = ? where Usuario = ?");
                 statement.setString(1, myName.getText().toString().toLowerCase());
                 statement.setString(2, myTel.getText().toString().toLowerCase());
                 statement.setString(3, myEmail.getText().toString().toLowerCase());
                 statement.setString(4, myDir.getText().toString().toLowerCase());
+                statement.setString(5, user.toLowerCase());
+
 
                 int rs = statement.executeUpdate();
 
@@ -126,6 +128,8 @@ public class EditInfoActivity extends AppCompatActivity {
         catch (Exception ex)
         {
             z = "Exceptions " + ex.getMessage();
+            Log.e("SendMail", ex.getMessage(), ex);
+
         }
 
         return z;

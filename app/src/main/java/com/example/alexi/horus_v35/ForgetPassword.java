@@ -57,7 +57,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
             if (con == null) {
                 z = "Error en conectar con el servidor\n por favor contacte al soporte tecnico";
             } else {
-                PreparedStatement statement = con.prepareStatement("select Usuario, Password from cliente where Email like ?");
+                PreparedStatement statement = con.prepareStatement("select Usuario, Password from cliente where Email = ?");
                 statement.setString(1, email);
                 ResultSet rs = statement.executeQuery();
 
@@ -117,7 +117,11 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        sendEmail();
+        try {
+            sendEmail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Intent i = new Intent(ForgetPassword.this, MainActivity.class); //aqui cambia de ventana
         startActivity(i);
         finish();
