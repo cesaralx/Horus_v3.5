@@ -655,17 +655,30 @@ public class Bluethoot extends Fragment {
 
         void gen(){
             try {
+                Log.e("activity", "Can not read file: " + numHist);
+
                 DataPoint[] DataPoints = new DataPoint[numHist];
-                for(int i=0;i<numHist;i++){
-                    if(i==0)
+                for(int i=0;i<numHist;i++) {
+                    Log.e("activity", "contador: " + i);
+
+                    if (i == 0)
                         DataPoints[i] = new DataPoint(i, 1);
-                    if(i>=8)
-                        DataPoints[i] = new DataPoint(i, 8);
-                    if(i<=5 && i>0) {
+//                    if(i>=8)
+//                        DataPoints[i] = new DataPoint(3, i);
+                    if (i <= 5 && i > 0) {
                         DataPoints[i] = new DataPoint(i, 6);
-                    }else {
-                        DataPoints[i] = new DataPoint(i, 3);
+                    } else {
+                        if (i <= 8 && i > 5) {
+                            DataPoints[i] = new DataPoint(i, 4);
+                        } else {
+                            if (i < 14 && i > 8) {
+                                DataPoints[i] = new DataPoint(i, 2);
+                            } else {
+                                DataPoints[i] = new DataPoint(i, 1);
+                            }
+                        }
                     }
+
                 }
 
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataPoints);
@@ -678,6 +691,25 @@ public class Bluethoot extends Fragment {
 //                        new DataPoint(4, 8),
 //                        new DataPoint(6,5)
 //                });
+
+                // set manual X bounds
+                graph.getViewport().setYAxisBoundsManual(true);
+                graph.getViewport().setMinY(-20);
+                graph.getViewport().setMaxY(20);
+
+                graph.getViewport().setXAxisBoundsManual(true);
+                graph.getViewport().setMinX(0);
+                graph.getViewport().setMaxX(20);
+
+                // enable scaling and scrolling
+//                graph.getViewport().setScalable(true);
+//                graph.getViewport().setScalableY(true);
+
+                graph.getViewport().setScrollable(true); // enables horizontal scrolling
+                graph.getViewport().setScrollableY(true); // enables vertical scrolling
+                graph.getViewport().setScalable(true); // enables horizontal zooming and scrolling
+                graph.getViewport().setScalableY(true); // enables vertical zooming and scrolling
+
                 graph.addSeries(series);
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override

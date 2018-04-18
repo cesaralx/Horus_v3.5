@@ -256,7 +256,7 @@ public class Actions {
             if (con == null) {
                 isSuceess = false;
             } else {
-                PreparedStatement statement = con.prepareStatement("select * from hist_cambios where clienteUser = ?",ResultSet.TYPE_SCROLL_INSENSITIVE,
+                PreparedStatement statement = con.prepareStatement("select * from hist_cambios where clienteUser = ? order by fecha",ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 statement.setString(1, user);
                 ResultSet rs = statement.executeQuery();
