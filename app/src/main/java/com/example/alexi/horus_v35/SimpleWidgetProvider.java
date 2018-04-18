@@ -31,7 +31,7 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                     R.layout.simple_widget);
-            remoteViews.setTextViewText(R.id.textView, number);
+            remoteViews.setTextViewText(R.id.textView, temp+" \nBueno");
 
             Intent intent = new Intent(context, SimpleWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
