@@ -281,6 +281,7 @@ public class Bluethoot extends Fragment {
                     ItemData itemsData[] = ac.getHist(getActivity());
                     numHist = ac.getNUMHIST();
 
+
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     MyAdapter mAdapter = new MyAdapter(itemsData);
                     mRecyclerView.setAdapter(mAdapter);

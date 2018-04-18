@@ -24,7 +24,7 @@ public class Actions {
 
     private String date, accion;
 
-    private int NUMHIST;
+    private int NUMHIST=0;
 
     public Actions() {
     }
